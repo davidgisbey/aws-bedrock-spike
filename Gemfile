@@ -2,6 +2,7 @@
 
 source "https://rubygems.org"
 
+gem "ruby-amazon-bedrock"
 gem 'sinatra'
 
 group :development, :test do
