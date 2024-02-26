@@ -1,12 +1,6 @@
 require 'sinatra'
-require 'pry'
 require 'dotenv/load'
-require "amazon_bedrock"
 require 'aws-sdk-bedrockruntime'
-
-get '/ping' do
-  'pong'
-end
 
 get '/query' do
   query = params[:query]
@@ -23,7 +17,7 @@ get '/query' do
     accept: '*/*',
     body: {
       inputText: query,
-      # you would want to make these configurable, but for simplicity hardcoded them here.
+      # you would want to make these configurable, but for simplicity i've hardcoded them here.
       textGenerationConfig: {
         maxTokenCount: 4096,
         stopSequences: [],
@@ -34,19 +28,4 @@ get '/query' do
   )
 
   JSON.parse(aws_response.body.read)["results"].first["outputText"]
-end
-
-get '/query-with-ruby-amazon-bedrock' do
-  query = params[:query]
-
-  client = RubyAmazonBedrock::Client.new(
-    region: ENV['REGION'],
-    access_key_id: ENV['ACCESS_KEY_ID'],
-    secret_access_key: ENV['SECRET_ACCESS_KEY']
-  )
-
-  client.invoke_model(
-    id: 'amazon.titan-text-express-v1',
-    prompt: query,
-  )[:text]
 end
