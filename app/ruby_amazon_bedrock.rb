@@ -12,7 +12,7 @@ get '/query' do
   )
 
   client.invoke_model(
-    id: 'amazon.titan-text-express-v1',
+    id: ENV['MODEL_ID'],
     prompt: query,
   )[:text]
 end
