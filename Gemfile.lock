@@ -53,6 +53,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-sdk-bedrockruntime
   dotenv
   pry
   ruby-amazon-bedrock
